@@ -54,6 +54,16 @@ define Device/tplink_archer-c6-v2
 endef
 TARGET_DEVICES += tplink_archer-c6-v2
 
+define Device/tplink_archer-c5-v1
+  $(Device/tplink-16mlzma)
+  ATH_SOC := qca9558
+  DEVICE_TITLE := TP-Link Archer C5 v1
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport kmod-ath10k-ct ath10k-firmware-qca988x-ct
+  TPLINK_HWID := 0xc5000001
+  SUPPORTED_DEVICES += archer-c5
+endef
+TARGET_DEVICES += tplink_archer-c5-v1
+
 define Device/tplink_archer-c7-v1
   $(Device/tplink-8mlzma)
   ATH_SOC := qca9558
@@ -99,6 +109,22 @@ define Device/tplink_archer-c7-v5
 endef
 TARGET_DEVICES += tplink_archer-c7-v5
 
+define Device/tplink_re350k-v1
+  $(Device/tplink)
+  ATH_SOC := qca9558
+  IMAGE_SIZE := 13760k
+  DEVICE_TITLE := TP-Link RE350K v1
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca988x-ct
+  TPLINK_BOARD_ID := RE350K-V1
+  TPLINK_HWID := 0x0
+  TPLINK_HWREV := 0
+  KERNEL := kernel-bin | append-dtb | lzma | tplink-v1-header -O
+  IMAGE/sysupgrade.bin := append-rootfs | tplink-safeloader sysupgrade | \
+    check-size $$$$(IMAGE_SIZE) | append-metadata
+  IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
+endef
+TARGET_DEVICES += tplink_re350k-v1
+
 define Device/tplink_re450-v2
   $(Device/tplink)
   ATH_SOC := qca9563
@@ -122,7 +148,7 @@ define Device/tplink_tl-wdr3600
   DEVICE_TITLE := TP-Link TL-WDR3600
   DEVICE_PACKAGES := kmod-usb-core kmod-usb2 kmod-usb-ledtrig-usbport
   TPLINK_HWID := 0x36000001
-  SUPPORTED_DEVICES += tl-wdr3600
+  SUPPORTED_DEVICES += tl-wdr4300
 endef
 TARGET_DEVICES += tplink_tl-wdr3600
 
@@ -171,6 +197,16 @@ define Device/tplink_tl-wr810n-v2
   TPLINK_HWID := 0x8100002
 endef
 TARGET_DEVICES += tplink_tl-wr810n-v2
+
+define Device/tplink_tl-wr710n-v1
+  $(Device/tplink-8mlzma)
+  ATH_SOC := ar9331
+  DEVICE_TITLE := TP-Link TL-WR710N v1
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb-chipidea2 kmod-usb-ledtrig-usbport
+  TPLINK_HWID := 0x07100001
+  SUPPORTED_DEVICES += tl-wr710n
+endef
+TARGET_DEVICES += tplink_tl-wr710n-v1
 
 define Device/tplink_tl-wr842n-v1
   $(Device/tplink-8m)
